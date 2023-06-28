@@ -59,7 +59,7 @@ const ItemComponent: React.FC<IItemComponentProps> = ({
               item.completed && "line-through text-gray-700"
             }`}
           >
-            <div className="w-3/5 text-left flex gap-2">
+            <div className="w-3/5 text-left items-center flex gap-2">
               <input
                 onChange={() => checkTask(item)}
                 type="checkbox"
@@ -71,7 +71,7 @@ const ItemComponent: React.FC<IItemComponentProps> = ({
                 <div className="text-white">{item.title}</div>
               )}
             </div>
-            <div className=" w-1/5 flex gap-2 justify-end text-xl">
+            <div className=" w-1/5 flex gap-2 items-center justify-end text-xl">
               <button onClick={() => openModal(item)}>
                 <BiSolidEdit />
               </button>
