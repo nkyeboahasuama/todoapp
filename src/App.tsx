@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <div className="w-full h-screen text-black flex items-center justify-center ">
         <div className="border overflow-auto border-slate-950 w-full h-full  ">
-          {/* <Input /> */}
           <Header itemsArray={itemsArray} setItemsArray={setItemsArray} />
           <ItemComponent
             itemsArray={itemsArray}

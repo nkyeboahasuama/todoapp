@@ -18,9 +18,11 @@ export const todos: ITodoTypes[] = [
   {
     id: "3",
     title: "Visit Jane",
+    completed: true,
   },
   {
     id: "4",
     title: "Read my story book",
+    completed: false,
   },
 ];
