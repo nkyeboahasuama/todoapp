@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import React, { useRef } from "react";
+import { useState, useEffect } from "react";
+=======
 import React from "react";
 import { useState } from "react";
+>>>>>>> 2cd78eb7e98b533eeadeee8c0a984b32b711d29c
 import { ITodoTypes } from "../utils/items";
 
 interface IItemModalProps {
@@ -13,6 +18,7 @@ const ItemModal: React.FC<IItemModalProps> = ({
   selectedItem,
   editTask,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [itemTitle, setItemTitle] = useState(selectedItem.title);
   const [item, setItem] = useState(selectedItem);
 
@@ -20,38 +26,40 @@ const ItemModal: React.FC<IItemModalProps> = ({
     setItemTitle(e.target.value);
   };
 
-  const updatingItemsArray = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const updatedTask = { ...selectedItem, title: itemTitle };
-    setItem(updatedTask);
-    if (editTask) {
-      editTask(updatedTask);
-    }
+  const updatingItemsArray = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const updatedItem = { ...selectedItem, title: itemTitle };
+    setItem(updatedItem);
+    editTask && editTask(updatedItem);
     closeModal();
-    setItemTitle("");
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className="w-full h-screen bg-black bg-opacity-30 flex justify-center absolute top-0 left-0 items-center">
-      <div className="w-11/12 h-2/5 bg-white flex flex-col justify-between text-black p-3">
-        <div className=" h-4/5 flex gap-2 flex-col">
-          {/* <div className="flex flex-col gap-2 h-2/4 justify-between  bg-green-800"> */}
-          <form
-            className="flex flex-col gap-2 justify-between"
-            onSubmit={updatingItemsArray}
-          >
+      <div className="w-11/12 h-2/5 flex flex-col justify-between bg-white text-black p-3">
+        <div className=" h-4/5 flex flex-col">
+          <form className="flex flex-col gap-2  h-2/5">
             <input
+              ref={inputRef}
               className="px-2 w-full h-10 border-2 border-black"
               type="text"
               value={itemTitle}
               onChange={handleChange}
             />
-            <button className="bg-black font-medium text-white w-full h-10">
+            <button
+              className="bg-black w-full font-medium text-white h-10"
+              onClick={updatingItemsArray}
+            >
               Save changes
             </button>
           </form>
-          {/* </div> */}
-          <div className="px-2">
+          <div className="pl-2">
             <li>Title: {item.title}</li>
             <li>Completed: {item.completed ? "True" : "False"} </li>
           </div>
