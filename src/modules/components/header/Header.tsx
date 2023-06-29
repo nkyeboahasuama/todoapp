@@ -17,7 +17,7 @@ const Header: React.FC<IHeaderProps> = ({ setItemsArray, itemsArray }) => {
 
   return (
     <>
-      <div className="w-full h-24 bg-orange-700 mb-5 flex justify-center">
+      <div className="w-full h-24 bg-orange-700  flex justify-center">
         <div className="flex items-center justify-between h-full w-11/12 px-3">
           <div className="text-white text-xl font-bold">Todo App</div>
           <div className="bg-white rounded-full w-6 h-6 text-xl flex justify-center items-center">
