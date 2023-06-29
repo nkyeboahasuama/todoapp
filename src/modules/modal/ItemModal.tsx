@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-=======
-import React from "react";
-import { useState } from "react";
->>>>>>> 2cd78eb7e98b533eeadeee8c0a984b32b711d29c
 import { ITodoTypes } from "../utils/items";
 
 interface IItemModalProps {

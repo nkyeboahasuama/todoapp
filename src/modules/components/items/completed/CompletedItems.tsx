@@ -14,7 +14,7 @@ const CompletedItems: React.FC<IIsCompletedProps> = ({
   const isCompleted = itemsArray.filter((task) => task.completed === true);
 
   const deleteTask = (item: ITodoTypes) => {
-    const newTasks = isCompleted.filter((i) => i.id !== item.id);
+    const newTasks = itemsArray.filter((i) => i.id !== item.id);
     setItemsArray(newTasks);
   };
 

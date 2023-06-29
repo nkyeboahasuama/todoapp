@@ -28,7 +28,7 @@ const TodoItems: React.FC<ITodoItemsProps> = ({
   };
 
   const editTask = (newItem: ITodoTypes) => {
-    const newArray = isNotCompleted.map((i) => {
+    const newArray = itemsArray.map((i) => {
       if (i.id === newItem.id) {
         return newItem;
       }
@@ -38,7 +38,7 @@ const TodoItems: React.FC<ITodoItemsProps> = ({
   };
 
   const deleteTask = (item: ITodoTypes) => {
-    const newTasks = isNotCompleted.filter((i) => i.id !== item.id);
+    const newTasks = itemsArray.filter((i) => i.id !== item.id);
     setItemsArray(newTasks);
   };
 
