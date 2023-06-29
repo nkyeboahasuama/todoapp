@@ -1,16 +1,20 @@
-import React from "react";
-import Input from "./modules/components/input/Input";
-import ItemsListComponent from "./modules/components/items/ItemsListComponent";
+import { useState } from "react";
 import Header from "./modules/components/header/Header";
+import { todos } from "./modules/utils/items";
+import ItemComponent from "./modules/components/items/ItemComponent";
 
 function App() {
+  const [itemsArray, setItemsArray] = useState(todos);
+
   return (
     <div className="App">
-      <div className="w-full h-screen text-black flex items-center justify-center">
-        <div className="border border-slate-950 w-3/5 h-4/5  ">
-          {/* <Input /> */}
-          <Header />
-          <ItemsListComponent />
+      <div className="w-full h-screen text-black flex items-center justify-center ">
+        <div className="overflow-auto w-full h-full  ">
+          <Header itemsArray={itemsArray} setItemsArray={setItemsArray} />
+          <ItemComponent
+            itemsArray={itemsArray}
+            setItemsArray={setItemsArray}
+          />
         </div>
       </div>
     </div>
