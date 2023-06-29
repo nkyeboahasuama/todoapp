@@ -50,10 +50,7 @@ const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({
               value={itemTitle}
               onChange={handleChange}
             />
-            <button
-              className="bg-black font-medium h-10 text-white"
-              onClick={addNewTask}
-            >
+            <button className="bg-black w-full font-medium h-10 text-white">
               Add new task
             </button>
           </form>
