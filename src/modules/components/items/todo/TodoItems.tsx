@@ -43,14 +43,29 @@ const TodoItems: React.FC<ITodoItemsProps> = ({
   };
 
   const checkTask = (item: ITodoTypes) => {
+    const now = new Date();
+    const formattedTime = now.toLocaleString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    });
     const newCompleted = itemsArray.map((todo) => {
       if (item.id === todo.id) {
-        return { ...todo, completed: !todo.completed };
+        return {
+          ...todo,
+          completed: !todo.completed,
+          completedOn: formattedTime,
+        };
       }
       return todo;
     });
     setItemsArray(newCompleted);
   };
+  console.log(itemsArray);
 
   return (
     <>

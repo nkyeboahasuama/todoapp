@@ -2,6 +2,7 @@ export interface ITodoTypes {
   id: string;
   title: string;
   completed?: boolean;
+  completedOn?: string;
 }
 
 export const todos: ITodoTypes[] = [

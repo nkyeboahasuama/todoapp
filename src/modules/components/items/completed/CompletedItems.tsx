@@ -23,11 +23,18 @@ const CompletedItems: React.FC<IIsCompletedProps> = ({
       {isCompleted.map((item) => (
         <div
           key={item.id}
-          className="h-14 text-center px-5 w-11/12 rounded-full bg-red-600 mb-3 flex items-center justify-around item.completed text-gray-700
+          className="h-14 text-center px-5 w-11/12 rounded-full bg-red-600 mb-3 flex items-center justify-around item.completed text-white
           "
         >
           <div className="w-full text-left flex gap-2">
-            <div className="text-gray-700">{item.title}</div>
+            <div>{item.title}</div>
+            {item.completedOn && (
+              <div>
+                <small>
+                  <i>Completed on {item.completedOn}</i>
+                </small>
+              </div>
+            )}
           </div>
           <div className=" w-1/5 flex gap-2 justify-end text-xl">
             <button onClick={() => deleteTask(item)} className="text-white ">
