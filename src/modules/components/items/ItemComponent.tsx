@@ -1,19 +1,10 @@
-import React from "react";
 import { useState } from "react";
-import { ITodoTypes } from "../../utils/items";
 import Navigation from "../navigation/Navigation";
-import CompletedItems from "./completed/CompletedItems";
 import TodoItems from "./todo/TodoItems";
 
-interface IItemComponentProps {
-  itemsArray: ITodoTypes[];
-  setItemsArray: React.Dispatch<React.SetStateAction<ITodoTypes[]>>;
-}
+import CompletedTasks from "./completed/CompletedTasks";
 
-const ItemComponent: React.FC<IItemComponentProps> = ({
-  itemsArray,
-  setItemsArray,
-}) => {
+const ItemComponent = () => {
   const [isShowCompletedTasks, setIsShowCompletedTasks] = useState(false);
 
   return (
@@ -23,14 +14,7 @@ const ItemComponent: React.FC<IItemComponentProps> = ({
           isShowCompletedTasks={isShowCompletedTasks}
           setIsShowCompletedTasks={setIsShowCompletedTasks}
         />
-        {isShowCompletedTasks ? (
-          <CompletedItems
-            itemsArray={itemsArray}
-            setItemsArray={setItemsArray}
-          />
-        ) : (
-          <TodoItems itemsArray={itemsArray} setItemsArray={setItemsArray} />
-        )}
+        {isShowCompletedTasks ? <CompletedTasks /> : <TodoItems />}
       </div>
     </>
   );
