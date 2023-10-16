@@ -2,33 +2,42 @@ import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { ITodoTypes } from "../utils/items";
 import { v4 as uuidv4 } from "uuid";
+import { ApiRoutes } from "../utils/proxy";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../../redux/slices/itemsSlice";
+import { RootState } from "../../redux/store";
 
 interface IAddNewItemModalProps {
   closeModal: () => void;
-  itemsArray: ITodoTypes[];
-  setItemsArray: React.Dispatch<React.SetStateAction<ITodoTypes[]>>;
 }
 
-const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({
-  closeModal,
-  itemsArray,
-  setItemsArray,
-}) => {
+const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({ closeModal }) => {
   const [itemTitle, setItemTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemTitle(e.target.value);
   };
 
-  const addNewTask = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const addNewTask = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const newTask: ITodoTypes = {
-      id: uuidv4(),
+    const newTask: any = {
       title: itemTitle,
       completed: false,
     };
-    setItemsArray([...itemsArray, newTask]);
+
+    const response = await fetch(ApiRoutes.ADD_TASK, {
+      method: "POST",
+      body: JSON.stringify(newTask),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const jsonResponse = await response.json();
+    if (response.ok) {
+      dispatch(addTask(jsonResponse));
+    }
     closeModal();
   };
 
