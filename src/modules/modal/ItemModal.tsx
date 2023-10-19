@@ -1,31 +1,26 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-import { ITodoTypes } from "../utils/items";
+import { ITask } from "../utils/items";
+import { useDispatch } from "react-redux";
+import dataService from "../../services/dataService";
 
 interface IItemModalProps {
   closeModal: () => void;
-  selectedItem: ITodoTypes;
-  editTask?: (newItem: ITodoTypes) => void;
+  selectedItem: ITask;
 }
 
-const ItemModal: React.FC<IItemModalProps> = ({
-  closeModal,
-  selectedItem,
-  editTask,
-}) => {
+const ItemModal: React.FC<IItemModalProps> = ({ closeModal, selectedItem }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [itemTitle, setItemTitle] = useState(selectedItem.title);
-  const [item, setItem] = useState(selectedItem);
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemTitle(e.target.value);
   };
 
-  const updatingItemsArray = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleUpdateTask = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const updatedItem = { ...selectedItem, title: itemTitle };
-    setItem(updatedItem);
-    editTask && editTask(updatedItem);
+    dataService.updateTaskTitle(selectedItem, itemTitle, dispatch);
     closeModal();
   };
 
@@ -49,14 +44,14 @@ const ItemModal: React.FC<IItemModalProps> = ({
             />
             <button
               className="bg-black w-full font-medium text-white h-10"
-              onClick={updatingItemsArray}
+              onClick={handleUpdateTask}
             >
               Save changes
             </button>
           </form>
           <div className="pl-2">
-            <li>Title: {item.title}</li>
-            <li>Completed: {item.completed ? "True" : "False"} </li>
+            <li>Title: {selectedItem.title}</li>
+            <li>Completed: {selectedItem.completed ? "True" : "False"} </li>
           </div>
         </div>
         <div className="w-full flex justify-center items-center">

@@ -1,14 +1,8 @@
-import React from "react";
 import AddNewItemModal from "../../modal/AddNewItemModal";
 import { useState } from "react";
-import { ITodoTypes } from "../../utils/items";
 import { GrAdd } from "react-icons/gr";
-interface IHeaderProps {
-  itemsArray: ITodoTypes[];
-  setItemsArray: React.Dispatch<React.SetStateAction<ITodoTypes[]>>;
-}
 
-const Header: React.FC<IHeaderProps> = ({ setItemsArray, itemsArray }) => {
+const Header = () => {
   const [addItemModal, setAddItemModal] = useState(false);
 
   const closeModal = () => {
@@ -30,13 +24,7 @@ const Header: React.FC<IHeaderProps> = ({ setItemsArray, itemsArray }) => {
           </div>
         </div>
       </div>
-      {addItemModal && (
-        <AddNewItemModal
-          closeModal={closeModal}
-          setItemsArray={setItemsArray}
-          itemsArray={itemsArray}
-        />
-      )}
+      {addItemModal && <AddNewItemModal closeModal={closeModal} />}
     </>
   );
 };
