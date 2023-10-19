@@ -1,9 +1,8 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-import { ITask, ITodoTypes } from "../utils/items";
+import { ITask } from "../utils/items";
 import { useDispatch } from "react-redux";
-import { updateTask } from "../../redux/slices/itemsSlice";
-import { ApiRoutes } from "../utils/proxy";
+import dataService from "../../services/dataService";
 
 interface IItemModalProps {
   closeModal: () => void;
@@ -21,15 +20,7 @@ const ItemModal: React.FC<IItemModalProps> = ({ closeModal, selectedItem }) => {
 
   const handleUpdateTask = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const response = await fetch(ApiRoutes.UPDATE_TASK(selectedItem._id), {
-      method: "PATCH",
-      body: JSON.stringify({ title: itemTitle }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    const jsonResponse = await response.json();
-    if (response.ok) dispatch(updateTask(jsonResponse));
+    dataService.updateTaskTitle(selectedItem, itemTitle, dispatch);
     closeModal();
   };
 

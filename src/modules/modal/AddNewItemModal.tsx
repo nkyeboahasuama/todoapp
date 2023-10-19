@@ -1,11 +1,7 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import { ITodoTypes } from "../utils/items";
-import { v4 as uuidv4 } from "uuid";
-import { ApiRoutes } from "../utils/proxy";
-import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../redux/slices/itemsSlice";
-import { RootState } from "../../redux/store";
+import dataService from "../../services/dataService";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
 interface IAddNewItemModalProps {
   closeModal: () => void;
@@ -14,7 +10,7 @@ interface IAddNewItemModalProps {
 const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({ closeModal }) => {
   const [itemTitle, setItemTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemTitle(e.target.value);
@@ -27,17 +23,7 @@ const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({ closeModal }) => {
       completed: false,
     };
 
-    const response = await fetch(ApiRoutes.ADD_TASK, {
-      method: "POST",
-      body: JSON.stringify(newTask),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await response.json();
-    if (response.ok) {
-      dispatch(addTask(jsonResponse));
-    }
+    dataService.addTask(newTask, dispatch);
     closeModal();
   };
 
@@ -49,9 +35,9 @@ const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({ closeModal }) => {
 
   return (
     <div className="w-full h-screen bg-black bg-opacity-30 flex justify-center absolute top-0 left-0 items-center">
-      <div className="w-11/12 h-2/5 flex flex-col justify-between bg-white text-black p-3">
-        <div className=" h-4/5">
-          <form className="flex flex-col h-2/5 gap-2">
+      <div className="w-11/12 flex flex-col justify-between bg-white text-black p-3">
+        <div className="">
+          <form className="flex flex-col h-2/5 gap-2 mb-5">
             <input
               ref={inputRef}
               className="px-2 w-full h-10  border-2 border-black"
@@ -61,15 +47,11 @@ const AddNewItemModal: React.FC<IAddNewItemModalProps> = ({ closeModal }) => {
             />
             <button
               onClick={addNewTask}
-              className="bg-black w-full font-medium h-10 text-white"
+              className="bg-black w-full h-10 font-medium text-white"
             >
               Add new task
             </button>
           </form>
-          <div className="pl-2">
-            <li>Title: {itemTitle}</li>
-            <li>Completed: False </li>
-          </div>
         </div>
         <div className="w-full flex justify-center items-center">
           <button

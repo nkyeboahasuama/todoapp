@@ -1,21 +1,14 @@
-import React from "react";
 import { MdDelete } from "react-icons/md";
-import { RootState } from "../../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTask } from "../../../../redux/slices/itemsSlice";
-import { ApiRoutes } from "../../../utils/proxy";
 import { ITask } from "../../../utils/items";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
+import dataService from "../../../../services/dataService";
 
-const CompletedTasks = ({}) => {
-  const dispatch = useDispatch();
-  const tasks = useSelector((state: RootState) => state.tasks);
+const CompletedTasks = () => {
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector((state) => state.tasks.tasks);
 
   const handleDeleteTask = async (item: ITask) => {
-    const res = await fetch(ApiRoutes.DELETE_TASK(item._id), {
-      method: "DELETE",
-    });
-    const jsonRes = await res.json();
-    dispatch(deleteTask(jsonRes));
+    dataService.deleteTaskFromApi(item, dispatch);
   };
 
   const isCompleted = tasks.filter((task) => task.completed === true);
